@@ -7,17 +7,7 @@ resource "aws_vpc" "vpc1" {
         env = "Dev"
     } 
 }
-resource "aws_eip" "ei" {
-  
-}
-resource "aws_nat_gateway" "nat1" {
-  allocation_id = aws_eip.ei.id
-  subnet_id     = aws_subnet.public_subnet1.id
 
-  tags = {
-    Name = "gw NAT"
-  }
-}
 ## Subnet
 
 resource "aws_subnet" "public_subnet1" {
@@ -42,6 +32,8 @@ resource "aws_subnet" "public_subnet2" {
         env = "Dev"
     } 
 }
+
+
 ## Private subnet
 
 resource "aws_subnet" "private_subnet1" {
@@ -90,6 +82,17 @@ resource "aws_internet_gateway" "gtw1" {
         Name = "IGW"
     }
   
+}
+resource "aws_eip" "ei" {
+  
+}
+resource "aws_nat_gateway" "nat1" {
+  allocation_id = aws_eip.ei.id
+  subnet_id     = aws_subnet.public_subnet1.id
+
+  tags = {
+    Name = "gw NAT"
+  }
 }
 ##Route association
 
